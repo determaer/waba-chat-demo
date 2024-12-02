@@ -1,6 +1,7 @@
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
-import './style.css'
+import '/node_modules/@mobilon-dev/chotto/dist/style.css';
+
 import App from './App.vue'
 
 const pinia = createPinia()

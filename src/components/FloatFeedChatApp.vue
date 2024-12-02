@@ -1,11 +1,11 @@
 <template>
   <div>
     <FloatContainer
-      title="Header"
+      :title="selectedChat ? selectedChat.name : ''"
       color-title="#d4d4d4"
-      avatar="https://placehold.jp/30/336633/ffffff/64x64.png?text=MV"
-      height="90vh"
-      width="70vw"
+      :avatar="selectedChat ? selectedChat.avatar : ''"
+      height="500px"
+      width="500px"
     >
       <FeedLayout>
         <template #default>
@@ -14,20 +14,25 @@
             :is-selected-chat="!!selectedChat"
           >
             <template #default>
-              <ChatInfo
-                :chat="selectedChat"
-                @open-panel="isOpenChatPanel = !isOpenChatPanel"
-              />
               <Feed
                 :objects="messages"
+                :is-scroll-to-bottom-on-update-objects-enabled="isScrollToBottomOnUpdateObjectsEnabled"
                 @message-action="messageAction"
                 @load-more="loadMore"
+                
               />
               <ChatInput
-                :enable-emoji="true"
-                :channels="channels"
                 @send="addMessage"
-              />
+              >
+                <template #buttons>
+                  <FileUploader
+                    :filebump-url="filebumpUrl"
+                  />
+                  <ButtonEmojiPicker 
+                    :mode="'hover'"
+                  />
+                </template>
+              </ChatInput>
             </template>
           </chat-wrapper>
         </template>
@@ -40,17 +45,21 @@
 import { onMounted, ref, watch } from "vue";
 
 import {
-  ChatInfo,
   ChatInput,
   Feed,
   FloatContainer,
   FeedLayout,
-  ChatWrapper
+  FileUploader,
+  ButtonEmojiPicker,
+  ChatWrapper,
+  playNotificationAudio,
+  formatTimestamp,
 } from "@mobilon-dev/chotto";
 
 import { useChatsStore } from "../stores/chatsStore";
 import { transformToFeed } from "../transform/transformToFeed";
 
+//import '@mobilon-dev/chotto/style.css'
 
 // Define props
 const props = defineProps({
@@ -75,7 +84,8 @@ const selectedChat = ref(null);
 const messages = ref([]);
 const userProfile = ref({});
 const channels = ref([]);
-
+const isScrollToBottomOnUpdateObjectsEnabled = ref(false);
+const filebumpUrl = ref('https://filebump2.services.mobilon.ru');
 const isOpenChatPanel = ref(false);
 
 const messageAction = (data) => {

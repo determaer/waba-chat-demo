@@ -55,12 +55,22 @@ const dataProvider = {
       :data-provider="dataProvider"
       :index="0"
     />
+    <FloatFeedChatApp
+      :auth-provider="authProvider"
+      :data-provider="dataProvider"
+      :index="1"
+    />
+    <FloatFeedChatApp
+      :auth-provider="authProvider"
+      :data-provider="dataProvider"
+      :index="2"
+    />
   </div>
 </template>
 
 <style scoped>
 .container {
-  width: 70vw;
+  width: 100%;
   margin: 30px auto;
 }
 </style>
