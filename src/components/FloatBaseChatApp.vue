@@ -1,25 +1,38 @@
 <template>
   <div>
     <FloatContainer
-    :title="userProfile ? userProfile.name : ''"
+      :title="userProfile ? userProfile.name : ''"
       color-title="#d4d4d4"
       :avatar="userProfile ? userProfile.avatar : ''"
-      height="500px"
-      width="500px"
+      height="700px"
+      width="1000px"
     >
-      <FeedLayout>
-        <template #default>
+      <BaseLayout>
+
+        <template #first-col>
+          <UserProfile :user="userProfile" />
+          <ChatList
+            :chats="chatsStore.chats"
+            filter-enabled
+            @select="selectChat"
+            @action="chatAction"
+          />
+        </template>
+
+        <template #second-col>
           <chat-wrapper
             :is-open-chat-panel="isOpenChatPanel"
             :is-selected-chat="!!selectedChat"
           >
             <template #default>
+              <ChatInfo
+                :chat="selectedChat"
+                @open-panel="isOpenChatPanel = !isOpenChatPanel"
+              />
               <Feed
                 :objects="messages"
-                :is-scroll-to-bottom-on-update-objects-enabled="isScrollToBottomOnUpdateObjectsEnabled"
                 @message-action="messageAction"
                 @load-more="loadMore"
-                
               />
               <ChatInput
                 @send="addMessage"
@@ -31,12 +44,33 @@
                   <ButtonEmojiPicker 
                     :mode="'hover'"
                   />
+                  <ButtonTemplateSelector
+                    :templates="templates.templates"
+                    :mode="'click'"
+                  />
+                  <ChannelSelector 
+                    :channels="channels"
+                    @select-channel="onSelectChannel"
+                    :mode="'hover'"
+                  />
                 </template>
               </ChatInput>
             </template>
+
+            <template #chatpanel>
+              <ChatPanel
+                v-if="isOpenChatPanel"
+                :title="selectedChat.name"
+                @close-panel="isOpenChatPanel = !isOpenChatPanel"
+              >
+                <template #content>
+                  test
+                </template>
+              </ChatPanel>
+            </template>
           </chat-wrapper>
         </template>
-      </FeedLayout>
+      </BaseLayout>
     </FloatContainer>
   </div>
 </template>
@@ -45,21 +79,27 @@
 import { onMounted, ref, watch } from "vue";
 
 import {
+  ChatInfo,
   ChatInput,
+  ChatList,
   Feed,
+  UserProfile,
+  ChatPanel,
   FloatContainer,
-  FeedLayout,
+  ChatWrapper,
+  formatTimestamp,
+  insertDaySeparators,
+  playNotificationAudio,
+  sortByTimestamp,
+  BaseLayout,
   FileUploader,
   ButtonEmojiPicker,
-  ChatWrapper,
-  playNotificationAudio,
-  formatTimestamp,
+  ButtonTemplateSelector,
+  ChannelSelector,
 } from "@mobilon-dev/chotto";
 
 import { useChatsStore } from "../stores/chatsStore";
 import { transformToFeed } from "../transform/transformToFeed";
-
-//import '@mobilon-dev/chotto/style.css'
 
 // Define props
 const props = defineProps({
@@ -77,6 +117,7 @@ const props = defineProps({
   }
 });
 
+
 const chatsStore = useChatsStore();
 
 // Reactive data
@@ -84,9 +125,10 @@ const selectedChat = ref(null);
 const messages = ref([]);
 const userProfile = ref({});
 const channels = ref([]);
+const templates = ref([]);
+const isOpenChatPanel = ref(false);
 const isScrollToBottomOnUpdateObjectsEnabled = ref(false);
 const filebumpUrl = ref('https://filebump2.services.mobilon.ru');
-const isOpenChatPanel = ref(false);
 
 const messageAction = (data) => {
   console.log("message action", data);
@@ -107,7 +149,6 @@ const getFeedObjects = () => {
   } else {
     return [];
   }
-
 };
 
 const addMessage = (message) => {
@@ -124,13 +165,18 @@ const addMessage = (message) => {
   messages.value = getFeedObjects(); // Обновление сообщений
 };
 
+const selectChat = (chat) => {
+  selectedChat.value = chat;
+  //chatsStore.setUnreadCounter(chat.chatId, 0);
+  messages.value = getFeedObjects(); // Обновляем сообщения при выборе контакта
+};
+
 onMounted(() => {
   // console.log('mounted')
   userProfile.value = props.authProvider.getUserProfile(props.index);
   chatsStore.chats = props.dataProvider.getChats();
   channels.value = props.dataProvider.getChannels();
-  selectedChat.value = chatsStore.chats[props.index]
-  messages.value = getFeedObjects()
-  console.log(userProfile.value, chatsStore.chats[props.index])
+  templates.value = props.dataProvider.getTemplates()
+  console.log(userProfile)
 });
 </script>
