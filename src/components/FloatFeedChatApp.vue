@@ -102,7 +102,7 @@ const getFeedObjects = () => {
   if (selectedChat.value) {
     // здесь обработка для передачи сообщений в feed
     const messages = props.dataProvider.getFeed(selectedChat.value.chatId);
-    const messages3 = transformToFeed(messages);
+    const messages3 = transformToFeed(messages, props.index);
     return messages3;
   } else {
     return [];

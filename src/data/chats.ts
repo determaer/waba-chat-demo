@@ -14,7 +14,7 @@ export const chats = [
       { action: 'edit', title: 'изменить', icon: 'https://placehold.jp/30/dd6699/ffffff/64x64.png?text=pin' },
       { action: 'delete', title: 'удалить', icon: 'https://placehold.jp/30/dd6699/ffffff/64x64.png?text=del' },
     ],
-    typing: true,
+    typing: false,
     metadata: '',    // фильтр работает по name и данным в metadata
   },
   {
@@ -26,6 +26,8 @@ export const chats = [
     actions: [
       { action: 'edit', title: 'изменить' }, { action: 'unpin', title: 'открепить' },
     ],
+    typing: false,
+    lastMessage: 'test',
     metadata: '',
   },
   {
@@ -36,6 +38,8 @@ export const chats = [
     actions: [
       { action: 'edit', title: 'изменить' }, { action: 'unpin', title: 'открепить' },
     ],
+    typing: false,
+    lastMessage: 'test',
     metadata: '',
   },
 ];
