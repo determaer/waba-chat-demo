@@ -128,8 +128,10 @@ const addMessage = (message) => {
     chatId: selectedChat.value.chatId,
     senderId: props.index + 1,
     timestamp: Date.now()/ 1000,
-    
+    status: 'received',
   });
+  chatsStore.setLastMessage(selectedChat.value.chatId,message.text)
+  chatsStore.increaseUnreadCounter(selectedChat.value.chatId, 1)
   messages.value = getFeedObjects(); // Обновление сообщений
   newMessage.value = !newMessage.value
 };

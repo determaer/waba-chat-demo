@@ -2,7 +2,7 @@ export const chats = [
   {
     chatId: 1, name: "Юрий",
     avatar: 'https://img.freepik.com/free-photo/smiley-man-relaxing-outdoors_23-2148739334.jpg',
-    countUnread: 102,
+    countUnread: 0,
     lastMessage: 'test',
     'lastActivity.time': 'час назад',         // читаемый формат - для пользователей
     'lastActivity.timestamp': '1727001759',   // для сортировки
