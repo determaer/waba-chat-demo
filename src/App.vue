@@ -47,33 +47,55 @@ const dataProvider = {
 
 <template>
   <div class="container">
-    <FloatFeedChatApp
-      :auth-provider="authProvider"
-      :data-provider="dataProvider"
-      :index="0"
-    />
-    <FloatFeedChatApp
-      :auth-provider="authProvider"
-      :data-provider="dataProvider"
-      :index="1"
-    />
-    <FloatFeedChatApp
-      :auth-provider="authProvider"
-      :data-provider="dataProvider"
-      :index="2"
-    />
-    <FloatBaseChatApp
-      :auth-provider="authProvider"
-      :data-provider="dataProvider"
-      :index="3"
-    />
+    <div class="cell11">
+      <FloatFeedChatApp
+        :auth-provider="authProvider"
+        :data-provider="dataProvider"
+        :index="0"
+      />
+    </div>
+    <div class="cell12">
+      <FloatFeedChatApp
+        :auth-provider="authProvider"
+        :data-provider="dataProvider"
+        :index="1"
+      />
+    </div>
+    <div class="cell21">
+      <FloatFeedChatApp
+        :auth-provider="authProvider"
+        :data-provider="dataProvider"
+        :index="2"
+      />
+    </div>
+    <div class="cell22">
+      <FloatBaseChatApp
+        :auth-provider="authProvider"
+        :data-provider="dataProvider"
+        :index="3"
+      />
+    </div>
   </div>
 </template>
 
 <style scoped>
 .container {
-  width: 100%;
+  width: 2000px;
   height: 2000px;
   margin: 30px auto;
+  display: grid;
+  grid-template-columns: 500px 1000px;
+  grid-template-rows: 500px 1000px;
+}
+
+.cell11,.cell12,.cell21,.cell22{
+  position: relative;
+}
+.cell12{
+  margin-left: 150px;
+}
+
+.cell21{
+  margin-top: 100px;
 }
 </style>

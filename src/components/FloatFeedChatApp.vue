@@ -1,5 +1,4 @@
 <template>
-  <div>
     <FloatContainer
     :title="userProfile ? userProfile.name : ''"
       color-title="#d4d4d4"
@@ -38,7 +37,6 @@
         </template>
       </FeedLayout>
     </FloatContainer>
-  </div>
 </template>
 
 <script setup>
@@ -58,7 +56,7 @@ import {
 
 import { useChatsStore } from "../stores/chatsStore";
 import { transformToFeed } from "../transform/transformToFeed";
-import { useNewMessage } from "../useNewmessage";
+import { useNewMessage } from "../useNewMessage";
 
 const {newMessage} = useNewMessage()
 

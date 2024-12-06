@@ -5,7 +5,7 @@
       color-title="#d4d4d4"
       :avatar="userProfile ? userProfile.avatar : ''"
       height="700px"
-      width="1000px"
+      width="800px"
     >
       <BaseLayout>
 
@@ -100,7 +100,7 @@ import {
 
 import { useChatsStore } from "../stores/chatsStore";
 import { transformToFeed } from "../transform/transformToFeed";
-import { useNewMessage } from "../useNewmessage";
+import { useNewMessage } from "../useNewMessage";
 
 const {newMessage} = useNewMessage()
 
