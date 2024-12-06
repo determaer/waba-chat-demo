@@ -15,7 +15,6 @@
             :chats="chatsStore.chats"
             filter-enabled
             @select="selectChat"
-            @action="chatAction"
           />
         </template>
 
@@ -33,9 +32,11 @@
                 :objects="messages"
                 @message-action="messageAction"
                 @load-more="loadMore"
+                :is-scroll-to-bottom-on-update-objects-enabled="isScrollToBottomOnUpdateObjectsEnabled"
               />
               <ChatInput
                 @send="addMessage"
+                @typing="sendTyping"
               >
                 <template #buttons>
                   <FileUploader
@@ -50,7 +51,6 @@
                   />
                   <ChannelSelector 
                     :channels="channels"
-                    @select-channel="onSelectChannel"
                     :mode="'hover'"
                   />
                 </template>
@@ -100,6 +100,16 @@ import {
 
 import { useChatsStore } from "../stores/chatsStore";
 import { transformToFeed } from "../transform/transformToFeed";
+import { useNewMessage } from "../useNewmessage";
+
+const {newMessage} = useNewMessage()
+
+watch(
+  () => newMessage.value,
+  () => {
+    messages.value = getFeedObjects();
+  },
+)
 
 // Define props
 const props = defineProps({
@@ -159,11 +169,16 @@ const addMessage = (message) => {
     text: message.text,
     type: message.type,
     chatId: selectedChat.value.chatId,
-    direction: "outgoing",
-    timestamp: "1727112546",
+    senderId: props.index + 1,
+    timestamp: Date.now() / 1000,
   });
   messages.value = getFeedObjects(); // Обновление сообщений
+  newMessage.value = !newMessage.value
 };
+
+const sendTyping = () => {
+
+}
 
 const selectChat = (chat) => {
   selectedChat.value = chat;

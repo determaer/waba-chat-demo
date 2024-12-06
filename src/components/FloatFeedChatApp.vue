@@ -58,8 +58,16 @@ import {
 
 import { useChatsStore } from "../stores/chatsStore";
 import { transformToFeed } from "../transform/transformToFeed";
+import { useNewMessage } from "../useNewmessage";
 
-//import '@mobilon-dev/chotto/style.css'
+const {newMessage} = useNewMessage()
+
+watch(
+  () => newMessage.value,
+  () => {
+    messages.value = getFeedObjects();
+  },
+)
 
 // Define props
 const props = defineProps({
@@ -118,10 +126,11 @@ const addMessage = (message) => {
     text: message.text,
     type: message.type,
     chatId: selectedChat.value.chatId,
-    direction: "outgoing",
-    timestamp: "1727112546",
+    senderId: props.index + 1,
+    timestamp: Date.now()/ 1000,
   });
   messages.value = getFeedObjects(); // Обновление сообщений
+  newMessage.value = !newMessage.value
 };
 
 onMounted(() => {

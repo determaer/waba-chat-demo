@@ -14,7 +14,6 @@ export const transformToFeed = (objects: any[], index: number) => {
       else position = 'left'
     }
     else position = null
-    console.log(formatTimestamp(m.timestamp),)
     return {
       ...m,
       position: position,//m.direction === 'outgoing' ? 'right' : 'left',
