@@ -14,6 +14,9 @@ export const chats = [
       { action: 'edit', title: 'изменить', icon: 'https://placehold.jp/30/dd6699/ffffff/64x64.png?text=pin' },
       { action: 'delete', title: 'удалить', icon: 'https://placehold.jp/30/dd6699/ffffff/64x64.png?text=del' },
     ],
+    //В данном случае typing совершает "владелец" чата (поле name)
+    //typing in - собеседник (Татьяна)
+    typingIn: false,
     typing: false,
     metadata: '',    // фильтр работает по name и данным в metadata
   },
@@ -27,6 +30,7 @@ export const chats = [
       { action: 'edit', title: 'изменить' }, { action: 'unpin', title: 'открепить' },
     ],
     typing: false,
+    typingIn: false,
     lastMessage: 'test',
     metadata: '',
   },
@@ -39,6 +43,7 @@ export const chats = [
       { action: 'edit', title: 'изменить' }, { action: 'unpin', title: 'открепить' },
     ],
     typing: false,
+    typingIn: false,
     lastMessage: 'test',
     metadata: '',
   },

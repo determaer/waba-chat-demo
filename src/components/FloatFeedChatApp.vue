@@ -18,10 +18,11 @@
                 :is-scroll-to-bottom-on-update-objects-enabled="isScrollToBottomOnUpdateObjectsEnabled"
                 @message-action="messageAction"
                 @load-more="loadMore"
-                
+                :typing="selectedChat.typingIn"
               />
               <ChatInput
                 @send="addMessage"
+                @typing="sendTyping"
               >
                 <template #buttons>
                   <FileUploader
@@ -99,6 +100,15 @@ const isOpenChatPanel = ref(false);
 const messageAction = (data) => {
   console.log("message action", data);
 };
+
+let timer;
+const sendTyping = () => {
+  chatsStore.setTyping(selectedChat.value.chatId, true)
+  clearTimeout(timer)
+  timer = setTimeout(() => {
+    chatsStore.setTyping(selectedChat.value.chatId, false)
+  },5000)
+}
 
 const loadMore = () => {
   // do load more messages to feed

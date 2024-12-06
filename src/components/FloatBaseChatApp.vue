@@ -33,7 +33,8 @@
                 @message-action="messageAction"
                 @load-more="loadMore"
                 :is-scroll-to-bottom-on-update-objects-enabled="isScrollToBottomOnUpdateObjectsEnabled"
-              />
+                :typing="selectedChat.typing"
+                />
               <ChatInput
                 @send="addMessage"
                 @typing="sendTyping"
@@ -176,8 +177,13 @@ const addMessage = (message) => {
   newMessage.value = !newMessage.value
 };
 
+let timer;
 const sendTyping = () => {
-
+  chatsStore.setTypingIn(selectedChat.value.chatId, true)
+  clearTimeout(timer)
+  timer = setTimeout(() => {
+    chatsStore.setTypingIn(selectedChat.value.chatId, false)
+  },5000)
 }
 
 const selectChat = (chat) => {

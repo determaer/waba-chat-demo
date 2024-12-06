@@ -51,6 +51,18 @@ export const useChatsStore = defineStore('chats', () => {
     }
   }
 
+  function setTypingIn(chatId: string, typing: Boolean, attrs: Object) {
+    const chat = getChatById(chatId);
+    if (chat) {
+      if (attrs){
+        chat.typingIn = attrs
+      }
+      else {
+        chat.typingIn = typing;
+      }
+    }
+  }
+
   function updateChatNewMessage(
     chatId: string,
     countUnread: number,
@@ -73,5 +85,6 @@ export const useChatsStore = defineStore('chats', () => {
     setStatus,
     getChatById,
     setTyping,
+    setTypingIn,
   }
 })
