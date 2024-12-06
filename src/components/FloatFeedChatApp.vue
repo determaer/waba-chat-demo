@@ -63,7 +63,9 @@ const {newMessage} = useNewMessage()
 watch(
   () => newMessage.value,
   () => {
-    messages.value = getFeedObjects();
+    if (messages.value.length != getFeedObjects().length){
+      messages.value = getFeedObjects();
+    }
   },
 )
 
@@ -90,7 +92,7 @@ const selectedChat = ref(null);
 const messages = ref([]);
 const userProfile = ref({});
 const channels = ref([]);
-const isScrollToBottomOnUpdateObjectsEnabled = ref(false);
+const isScrollToBottomOnUpdateObjectsEnabled = ref(true);
 const filebumpUrl = ref('https://filebump2.services.mobilon.ru');
 const isOpenChatPanel = ref(false);
 
@@ -126,6 +128,7 @@ const addMessage = (message) => {
     chatId: selectedChat.value.chatId,
     senderId: props.index + 1,
     timestamp: Date.now()/ 1000,
+    
   });
   messages.value = getFeedObjects(); // Обновление сообщений
   newMessage.value = !newMessage.value
