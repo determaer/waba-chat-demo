@@ -8,7 +8,7 @@ export const chats = [
     'lastActivity.timestamp': '1727001759',   // для сортировки
     isFixedBottom: false,
     isFixedTop: false,
-    status: "#767676",
+    status: 'lightgreen',
     'lastMessage.status': 'read', // received|read|sent|in
     actions: [
       { action: 'pinUp', title: 'прикрепить сверху' },
@@ -36,6 +36,7 @@ export const chats = [
     typingIn: false,
     lastMessage: 'test',
     metadata: 'василий',
+    status: 'lightgreen',
   },
   {
     chatId: 3, name: "Алексей",
@@ -53,5 +54,6 @@ export const chats = [
     typingIn: false,
     lastMessage: 'Привет!',
     metadata: 'алексей',
+    status: 'lightgreen',
   },
 ];

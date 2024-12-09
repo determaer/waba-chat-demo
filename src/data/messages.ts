@@ -64,6 +64,6 @@ export const messages = [
   },
   {
     senderId:4,chatId: 3, type: "message.image", url: "https://nationaltoday.com/wp-content/uploads/2022/05/Sun-Day--1200x834.jpg", alt: "Example Image",
-    timestamp: '1726743559', text: "Посмотри, как красиво я умею фотографировать",
+    timestamp: '1726743559', text: "Посмотри, как красиво я умею фотографировать", status: 'read',
   },
 ];

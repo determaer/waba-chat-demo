@@ -6,7 +6,8 @@ export const userProfiles = [
     phone: "+79XXXXXXXX",
     auth: 'secretkey1',
     avatar: 'https://placehold.jp/30/336633/ffffff/64x64.png?text=MV',
-    status: "#767676",
+    status: "lightgreen",
+    online: true,
   },
   {
     id: 2,
@@ -15,7 +16,8 @@ export const userProfiles = [
     phone: "+79XXXXXXXX",
     auth: 'secretkey2',
     avatar: 'https://placehold.jp/30/336633/ffffff/64x64.png?text=MV',
-    status: "#767676",
+    status: "lightgreen",
+    online: true,
   },
   {
     id: 3,
@@ -24,7 +26,8 @@ export const userProfiles = [
     phone: "+79XXXXXXXX",
     auth: 'secretkey3',
     avatar: 'https://placehold.jp/30/336633/ffffff/64x64.png?text=MV',
-    status: "#767676",
+    status: "lightgreen",
+    online: true,
   },
   {
     id: 4,
@@ -33,6 +36,7 @@ export const userProfiles = [
     phone: "+79XXXXXXXX",
     auth: 'secretkey4',
     avatar: 'https://placehold.jp/30/336633/ffffff/64x64.png?text=MV',
-    status: "#767676",
+    status: "lightgreen",
+    online: true,
   }
 ];

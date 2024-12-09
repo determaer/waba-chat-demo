@@ -18,7 +18,17 @@ const data3 = {
 
 // Define the auth provider
 const authProvider = {
-  getUserProfile(index) { console.log(data3.userProfiles[3], index); return data3.userProfiles[index] }
+  getUserProfile(index) { return data3.userProfiles[index] },
+  setUserProfileOnline(index, online){
+    if (online){
+      data3.userProfiles[index].online = true
+      data3.userProfiles[index].status = 'lightgreen'
+    }
+    else if (!online){
+      data3.userProfiles[index].online = false
+      data3.userProfiles[index].status = 'gray'
+    }
+  }
 };
 
 // Define the data provider

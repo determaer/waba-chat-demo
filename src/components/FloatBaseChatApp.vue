@@ -1,11 +1,16 @@
 <template>
   <div>
+    <button v-if="!userProfile.online" @mousedown="onlineUser">
+      Открыть чат
+    </button>
     <FloatContainer
+      v-else
       :title="userProfile ? userProfile.name : ''"
       color-title="#d4d4d4"
       :avatar="userProfile ? userProfile.avatar : ''"
       height="700px"
       width="900px"
+      @close-window="offlineUser"
     >
       <BaseLayout>
 
@@ -164,6 +169,21 @@ const templates = ref([]);
 const isOpenChatPanel = ref(false);
 const isScrollToBottomOnUpdateObjectsEnabled = ref(false);
 const filebumpUrl = ref('https://filebump2.services.mobilon.ru');
+
+const offlineUser = () => {
+  userProfile.value.online = false
+  userProfile.value.status = 'gray'
+  props.authProvider.setUserProfileOnline(props.index, false);
+  chatsStore.setStatus(selectedChat.value.chatId, 'gray')
+}
+
+const onlineUser = () => {
+  userProfile.value.online = true
+  userProfile.value.status = 'lightgreen'
+  props.authProvider.setUserProfileOnline(props.index, true);
+  chatsStore.setStatus(selectedChat.value.chatId, 'lightgreen')
+}
+
 
 const messageAction = (data) => {
   console.log("message action", data);
