@@ -86,7 +86,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch } from "vue";
+import { onMounted, ref, watch, nextTick } from "vue";
 
 import {
   ChatInfo,
@@ -119,6 +119,10 @@ watch(
   () => newMessage.value,
   () => {
     messages.value = getFeedObjects();
+    if (selectedChat.value){
+      chatsStore.setUnreadCounter(selectedChat.value.chatId, 0);
+      chatsStore.readMessages(selectedChat.value.chatId, props.index + 1)
+    }
   },
 )
 
@@ -199,8 +203,12 @@ const getFeedObjects = () => {
   if (selectedChat.value) {
     // здесь обработка для передачи сообщений в feed
     isScrollToBottomOnUpdateObjectsEnabled.value = true;
-    const messages = props.dataProvider.getFeed(selectedChat.value.chatId);
-    const messages3 = transformToFeed(messages, props.index);
+    const messages1 = props.dataProvider.getFeed(selectedChat.value.chatId);
+    const messages3 = transformToFeed(messages1, props.index);
+    if (JSON.stringify(messages.value) != JSON.stringify(messages3))
+      nextTick(() => {
+        newMessage.value = !newMessage.value
+      })
     return messages3;
   } else {
     return [];
@@ -210,17 +218,26 @@ const getFeedObjects = () => {
 const addMessage = (message) => {
   console.log(message);
   // Добавление сообщения в хранилище
-
+  const receiverId = selectedChat.value.members.find(id => id != props.index + 1) - 1
+  const isReceiverOnline = props.authProvider.getUserProfile(receiverId).online;
   props.dataProvider.addMessage({
     text: message.text,
     type: message.type,
     chatId: selectedChat.value.chatId,
     senderId: props.index + 1,
     timestamp: Date.now() / 1000,
+    status: isReceiverOnline ? 'read' : 'received',
   });
-  messages.value = getFeedObjects(); // Обновление сообщений
-  chatsStore.setLastStatus(selectedChat.value.chatId,'read')
   newMessage.value = !newMessage.value
+  messages.value = getFeedObjects(); // Обновление сообщений
+  chatsStore.updateChatNewMessage(
+    selectedChat.value.chatId, 
+    0, 
+    message.text, 
+    formatTimestamp(Date.now()/ 1000),
+    Date.now()/ 1000,
+    isReceiverOnline ? 'read' : 'received'
+  )
 };
 
 let timer;

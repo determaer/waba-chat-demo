@@ -1,6 +1,6 @@
 export const chats = [
   {
-    chatId: 1, name: "Юрий",
+    chatId: 1, name: "Юрий", members: [1, 4],
     avatar: 'https://img.freepik.com/free-photo/smiley-man-relaxing-outdoors_23-2148739334.jpg',
     countUnread: 0,
     lastMessage: 'test',
@@ -21,7 +21,7 @@ export const chats = [
     metadata: 'юрий',    // фильтр работает по name и данным в metadata
   },
   {
-    chatId: 2, name: "Василий",
+    chatId: 2, name: "Василий", members: [2, 4],
     countUnread: 0,
     isFixedBottom: false,
     isFixedTop: false,
@@ -39,7 +39,7 @@ export const chats = [
     status: 'lightgreen',
   },
   {
-    chatId: 3, name: "Алексей",
+    chatId: 3, name: "Алексей", members: [3, 4],
     countUnread: 1, 
     isFixedBottom: false,
     isFixedTop: false,
