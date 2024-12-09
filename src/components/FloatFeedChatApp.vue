@@ -69,9 +69,10 @@ const {newMessage} = useNewMessage()
 watch(
   () => newMessage.value,
   () => {
-    if (messages.value.length != getFeedObjects().length){
-      messages.value = getFeedObjects();
+    if (messages.value.length != getFeedObjects(false).length){
+      messages.value = getFeedObjects(true);
     }
+    else messages.value = getFeedObjects(false);
   },
 )
 
@@ -117,7 +118,7 @@ const selectedChat = ref(null);
 const messages = ref([]);
 const userProfile = ref({});
 const channels = ref([]);
-const isScrollToBottomOnUpdateObjectsEnabled = ref(true);
+const isScrollToBottomOnUpdateObjectsEnabled = ref(false);
 const filebumpUrl = ref('https://filebump2.services.mobilon.ru');
 const isOpenChatPanel = ref(false);
 
@@ -139,10 +140,11 @@ const loadMore = () => {
   console.log("load more");
 };
 
-const getFeedObjects = () => {
+const getFeedObjects = (scrollFlag) => {
   // console.log('get feed')
   if (selectedChat.value) {
     // здесь обработка для передачи сообщений в feed
+    isScrollToBottomOnUpdateObjectsEnabled.value = scrollFlag
     const messages = props.dataProvider.getFeed(selectedChat.value.chatId);
     const messages3 = transformToFeed(messages, props.index);
     return messages3;
@@ -153,7 +155,7 @@ const getFeedObjects = () => {
 };
 
 const addMessage = (message) => {
-  console.log(message);
+  console.log(message, selectedChat.value.chatId);
   // Добавление сообщения в хранилище
 
   props.dataProvider.addMessage({
@@ -164,9 +166,9 @@ const addMessage = (message) => {
     timestamp: Date.now()/ 1000,
     status: 'received',
   });
-  chatsStore.setLastMessage(selectedChat.value.chatId,message.text)
-  chatsStore.increaseUnreadCounter(selectedChat.value.chatId, 1)
-  messages.value = getFeedObjects(); // Обновление сообщений
+  
+  chatsStore.updateChatNewMessage(selectedChat.value.chatId, 1, message.text, formatTimestamp(Date.now()/ 1000),Date.now()/ 1000,'in')
+  messages.value = getFeedObjects(true); // Обновление сообщений
   newMessage.value = !newMessage.value
 };
 
@@ -176,7 +178,7 @@ onMounted(() => {
   chatsStore.chats = props.dataProvider.getChats();
   channels.value = props.dataProvider.getChannels();
   selectedChat.value = chatsStore.chats[props.index]
-  messages.value = getFeedObjects()
+  messages.value = getFeedObjects(false)
   console.log(userProfile.value, chatsStore.chats[props.index])
   themes[props.index].default = true
 });

@@ -178,6 +178,7 @@ const getFeedObjects = () => {
   // console.log('get feed')
   if (selectedChat.value) {
     // здесь обработка для передачи сообщений в feed
+    isScrollToBottomOnUpdateObjectsEnabled.value = true;
     const messages = props.dataProvider.getFeed(selectedChat.value.chatId);
     const messages3 = transformToFeed(messages, props.index);
     return messages3;
@@ -198,6 +199,7 @@ const addMessage = (message) => {
     timestamp: Date.now() / 1000,
   });
   messages.value = getFeedObjects(); // Обновление сообщений
+  chatsStore.setLastStatus(selectedChat.value.chatId,'read')
   newMessage.value = !newMessage.value
 };
 
@@ -211,8 +213,10 @@ const sendTyping = () => {
 }
 
 const selectChat = (chat) => {
+  newMessage.value = !newMessage.value
   selectedChat.value = chat;
-  //chatsStore.setUnreadCounter(chat.chatId, 0);
+  chatsStore.setUnreadCounter(chat.chatId, 0);
+  chatsStore.readMessages(chat.chatId, props.index + 1)
   messages.value = getFeedObjects(); // Обновляем сообщения при выборе контакта
 };
 

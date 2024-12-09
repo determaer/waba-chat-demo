@@ -1,5 +1,6 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
+import { messages } from '../data';
 
 export const useChatsStore = defineStore('chats', () => {
   // chatStore должен хранить данные чатов в таком же виде как в компоненте Chat
@@ -24,6 +25,11 @@ export const useChatsStore = defineStore('chats', () => {
     if (chat) chat.countUnread += countUnread;
   }
 
+  function setUnreadCounter(chatId: string, countUnread: number) {
+		const chat: any = chats.value.find((c:any) => c.chatId === chatId)
+		if (chat) chat.countUnread = countUnread
+	}
+
   function setLastMessage(chatId: string, lastMessage: string) {
     const chat = getChatById(chatId);
     if (chat) chat.lastMessage = lastMessage.substring(0, 20);
@@ -32,6 +38,16 @@ export const useChatsStore = defineStore('chats', () => {
   function setLastActivityTime(chatId: string, lastActivityTime: string) {
     const chat = getChatById(chatId);
     if (chat) chat['lastActivity.time'] = lastActivityTime;
+  }
+
+  function setTimestamp(chatId: string, timestamp: string) {
+    const chat = getChatById(chatId);
+    if (chat) chat['lastActivity.timestamp'] = timestamp;
+  }
+
+  function setLastStatus(chatId: string, status: string){
+    const chat = getChatById(chatId);
+    if (chat) chat['lastMessage.status'] = status;
   }
 
   function setStatus(chatId: string, statusColor: string) {
@@ -67,11 +83,30 @@ export const useChatsStore = defineStore('chats', () => {
     chatId: string,
     countUnread: number,
     lastMessage: string,
-    lastActivityTime: string
+    lastActivityTime: string,
+    timestamp: string,
+    status: string,
   ) {
     increaseUnreadCounter(chatId, countUnread);
     setLastMessage(chatId, lastMessage);
     setLastActivityTime(chatId, lastActivityTime);
+    setTimestamp(chatId, timestamp);
+    setLastStatus(chatId, status);
+  }
+
+  function readMessages(chatId: string, receiverId: number){
+    const chat = getChatById(chatId);
+    console.log(chat)
+    if (chat){
+      for (let message of messages){
+        if (message.chatId == Number(chatId) && message.senderId != receiverId){
+          message.status = 'read'
+          console.log(message)
+        }
+      }
+      console.log(messages)
+    }
+
   }
 
   return {
@@ -86,5 +121,8 @@ export const useChatsStore = defineStore('chats', () => {
     getChatById,
     setTyping,
     setTypingIn,
+    setUnreadCounter,
+    setLastStatus,
+    readMessages,
   }
 })

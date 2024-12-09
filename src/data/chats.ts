@@ -4,47 +4,54 @@ export const chats = [
     avatar: 'https://img.freepik.com/free-photo/smiley-man-relaxing-outdoors_23-2148739334.jpg',
     countUnread: 0,
     lastMessage: 'test',
-    'lastActivity.time': 'час назад',         // читаемый формат - для пользователей
+    'lastActivity.time': '24.09.2024',         // читаемый формат - для пользователей
     'lastActivity.timestamp': '1727001759',   // для сортировки
     isFixedBottom: false,
+    isFixedTop: false,
     status: "#767676",
-    'lastMessage.status': 'read',
+    'lastMessage.status': 'read', // received|read|sent|in
     actions: [
-      { action: 'add', title: 'добавить', icon: 'https://placehold.jp/30/dd6699/ffffff/64x64.png?text=add' },
-      { action: 'edit', title: 'изменить', icon: 'https://placehold.jp/30/dd6699/ffffff/64x64.png?text=pin' },
-      { action: 'delete', title: 'удалить', icon: 'https://placehold.jp/30/dd6699/ffffff/64x64.png?text=del' },
+      { action: 'pinUp', title: 'прикрепить сверху' },
+      { action: 'pinDown', title: 'прикрепить снизу' }
     ],
     //В данном случае typing совершает "владелец" чата (поле name)
     //typing in - собеседник (Татьяна)
     typingIn: false,
     typing: false,
-    metadata: '',    // фильтр работает по name и данным в metadata
+    metadata: 'юрий',    // фильтр работает по name и данным в metadata
   },
   {
     chatId: 2, name: "Василий",
-    countUnread: 0, isFixedTop: true,
-    'lastActivity.time': 'час назад',
+    countUnread: 0,
+    isFixedBottom: false,
+    isFixedTop: false,
+    'lastActivity.time': '24.09.2024',
     'lastActivity.timestamp': '1727027359',
-    'lastMessage.status': 'received',
+    'lastMessage.status': 'received', // received|read|sent|in
     actions: [
-      { action: 'edit', title: 'изменить' }, { action: 'unpin', title: 'открепить' },
+      { action: 'pinUp', title: 'прикрепить сверху' },
+      { action: 'pinDown', title: 'прикрепить снизу' }
     ],
     typing: false,
     typingIn: false,
     lastMessage: 'test',
-    metadata: '',
+    metadata: 'василий',
   },
   {
     chatId: 3, name: "Алексей",
-    countUnread: 0, isFixedBottom: true,
-    'lastMessage.status': 'se',
-    'lastActivity.timestamp': '1727027359',
+    countUnread: 1, 
+    isFixedBottom: false,
+    isFixedTop: false,
+    'lastActivity.time': '23.09.2024',
+    'lastMessage.status': 'in', // received|read|sent|in
+    'lastActivity.timestamp': '1727027459',
     actions: [
-      { action: 'edit', title: 'изменить' }, { action: 'unpin', title: 'открепить' },
+      { action: 'pinUp', title: 'прикрепить сверху' },
+      { action: 'pinDown', title: 'прикрепить снизу' }
     ],
     typing: false,
     typingIn: false,
-    lastMessage: 'test',
-    metadata: '',
+    lastMessage: 'Привет!',
+    metadata: 'алексей',
   },
 ];
