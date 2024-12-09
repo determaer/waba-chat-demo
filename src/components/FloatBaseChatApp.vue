@@ -5,7 +5,7 @@
       color-title="#d4d4d4"
       :avatar="userProfile ? userProfile.avatar : ''"
       height="700px"
-      width="800px"
+      width="900px"
     >
       <BaseLayout>
 
@@ -15,6 +15,10 @@
             :chats="chatsStore.chats"
             filter-enabled
             @select="selectChat"
+          />
+          <ThemeMode
+            :themes="themes"
+            :show="true"
           />
         </template>
 
@@ -97,6 +101,7 @@ import {
   ButtonEmojiPicker,
   ButtonTemplateSelector,
   ChannelSelector,
+  ThemeMode,
 } from "@mobilon-dev/chotto";
 
 import { useChatsStore } from "../stores/chatsStore";
@@ -128,6 +133,25 @@ const props = defineProps({
   }
 });
 
+const themes = [
+  {
+    code: "light",
+    name: "Light",
+  },
+  {
+    code: "dark",
+    name: "Dark",
+    
+  },
+  {
+    code: "green",
+    name: "Green",
+  },
+  {
+    code: "diamond",
+    name: "Diamond",
+  },
+];
 
 const chatsStore = useChatsStore();
 

@@ -13,6 +13,10 @@
             :is-selected-chat="!!selectedChat"
           >
             <template #default>
+              <ThemeMode
+                :themes="themes"
+                :show="false"
+              />
               <Feed
                 :objects="messages"
                 :is-scroll-to-bottom-on-update-objects-enabled="isScrollToBottomOnUpdateObjectsEnabled"
@@ -53,6 +57,7 @@ import {
   ChatWrapper,
   playNotificationAudio,
   formatTimestamp,
+  ThemeMode,
 } from "@mobilon-dev/chotto";
 
 import { useChatsStore } from "../stores/chatsStore";
@@ -86,6 +91,25 @@ const props = defineProps({
   }
 });
 
+const themes = [
+  {
+    code: "light",
+    name: "Light",
+  },
+  {
+    code: "dark",
+    name: "Dark",
+    
+  },
+  {
+    code: "green",
+    name: "Green",
+  },
+  {
+    code: "diamond",
+    name: "Diamond",
+  },
+];
 const chatsStore = useChatsStore();
 
 // Reactive data
@@ -154,5 +178,6 @@ onMounted(() => {
   selectedChat.value = chatsStore.chats[props.index]
   messages.value = getFeedObjects()
   console.log(userProfile.value, chatsStore.chats[props.index])
+  themes[props.index].default = true
 });
 </script>
