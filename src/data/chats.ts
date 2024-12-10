@@ -3,9 +3,9 @@ export const chats = [
     chatId: 1, name: "Юрий", members: [1, 4],
     avatar: 'https://img.freepik.com/free-photo/smiley-man-relaxing-outdoors_23-2148739334.jpg',
     countUnread: 0,unread1: 0, unread2: 0,
-    lastMessage: 'test',
-    'lastActivity.time': '24.09.2024',         // читаемый формат - для пользователей
-    'lastActivity.timestamp': '1727001759',   // для сортировки
+    lastMessage: '↺ video.mp4',
+    'lastActivity.time': '23.09.2024',         // читаемый формат - для пользователей
+    'lastActivity.timestamp': '1727087959',   // для сортировки
     isFixedBottom: false,
     isFixedTop: false,
     status: 'lightgreen',
@@ -25,8 +25,8 @@ export const chats = [
     countUnread: 0,unread1: 0, unread2: 0,
     isFixedBottom: false,
     isFixedTop: false,
-    'lastActivity.time': '24.09.2024',
-    'lastActivity.timestamp': '1727027359',
+    'lastActivity.time': '28.09.2024',
+    'lastActivity.timestamp': '1727527159',
     'lastMessage.status': 'received', // received|read|sent|in
     actions: [
       { action: 'pinUp', title: 'прикрепить сверху' },
@@ -34,7 +34,7 @@ export const chats = [
     ],
     typing: false,
     typingIn: false,
-    lastMessage: 'test',
+    lastMessage: '🔊 Голосовое сообщение',
     metadata: 'василий',
     status: 'lightgreen',
   },
@@ -45,14 +45,14 @@ export const chats = [
     isFixedTop: false,
     'lastActivity.time': '23.09.2024',
     'lastMessage.status': 'in', // received|read|sent|in
-    'lastActivity.timestamp': '1727027459',
+    'lastActivity.timestamp': '1727027959',
     actions: [
       { action: 'pinUp', title: 'прикрепить сверху' },
       { action: 'pinDown', title: 'прикрепить снизу' }
     ],
     typing: false,
     typingIn: false,
-    lastMessage: 'Привет!',
+    lastMessage: 'Привет! ...',
     metadata: 'алексей',
     status: 'lightgreen',
   },
