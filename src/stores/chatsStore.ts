@@ -96,17 +96,13 @@ export const useChatsStore = defineStore('chats', () => {
 
   function readMessages(chatId: string, receiverId: number){
     const chat = getChatById(chatId);
-    console.log(chat)
     if (chat){
       for (let message of messages){
         if (message.chatId == Number(chatId) && message.senderId != receiverId){
           message.status = 'read'
-          console.log(message)
         }
       }
-      console.log(messages)
     }
-
   }
 
   return {

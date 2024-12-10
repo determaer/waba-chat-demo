@@ -184,9 +184,18 @@ const addMessage = (message) => {
     senderId: props.index + 1,
     timestamp: Date.now()/ 1000,
     status: 'received',
+    url: message.url,
+    filename: message.filename,
   });
-  
-  chatsStore.updateChatNewMessage(selectedChat.value.chatId, 1, message.text, formatTimestamp(Date.now()/ 1000),Date.now()/ 1000,'in')
+  const chatMessageText = message.text == '' ? '↺ ' + message.filename : message.text
+  chatsStore.updateChatNewMessage(
+    selectedChat.value.chatId, 
+    1, 
+    chatMessageText, 
+    formatTimestamp(Date.now()/ 1000),
+    Date.now()/ 1000,
+    'in'
+  )
   messages.value = getFeedObjects(true); // Обновление сообщений
   newMessage.value = !newMessage.value
 };

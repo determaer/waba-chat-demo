@@ -227,13 +227,16 @@ const addMessage = (message) => {
     senderId: props.index + 1,
     timestamp: Date.now() / 1000,
     status: isReceiverOnline ? 'read' : 'received',
+    url: message.url,
+    filename: message.filename,
   });
   newMessage.value = !newMessage.value
   messages.value = getFeedObjects(); // Обновление сообщений
+  const chatMessageText = message.text == '' ? '↺ ' + message.filename : message.text
   chatsStore.updateChatNewMessage(
     selectedChat.value.chatId, 
     0, 
-    message.text, 
+    chatMessageText, 
     formatTimestamp(Date.now()/ 1000),
     Date.now()/ 1000,
     isReceiverOnline ? 'read' : 'received'
