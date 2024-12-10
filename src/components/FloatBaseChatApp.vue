@@ -38,6 +38,7 @@
                 @open-panel="isOpenChatPanel = !isOpenChatPanel"
               />
               <Feed
+                :button-params="selectedChat.countUnread > 0 ? {unreadAmount: selectedChat.countUnread} : null"
                 :objects="messages"
                 :is-scroll-to-bottom-on-update-objects-enabled="isScrollToBottomOnUpdateObjectsEnabled"
                 :typing="selectedChat.typing"
@@ -253,6 +254,7 @@ const addMessage = (message) => {
     Date.now()/ 1000,
     isReceiverOnline ? 'read' : 'received'
   )
+  chatsStore.increaseUnreadCounterOut(selectedChat.value.chatId, 1)
 };
 
 let timer;

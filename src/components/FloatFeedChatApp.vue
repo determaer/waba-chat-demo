@@ -23,6 +23,7 @@
                 :show="false"
               />
               <Feed
+                :button-params="selectedChat.countUnreadOut > 0 ? {unreadAmount: selectedChat.countUnreadOut} : null"
                 :objects="messages"
                 :is-scroll-to-bottom-on-update-objects-enabled="isScrollToBottomOnUpdateObjectsEnabled"
                 :typing="selectedChat.typingIn"
@@ -151,6 +152,7 @@ const messageVisible = (message) => {
     if (message.senderId != props.index + 1 && message.status == 'received' && message.position == 'left'){
       console.log('сообщение: ', message, props.index)
       chatsStore.readCurrentMessage(selectedChat.value.chatId, message)
+      chatsStore.decreaseUnreadCounterOut(selectedChat.value.chatId, 1)
       newMessage.value = !newMessage.value
     }
   }
