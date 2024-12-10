@@ -79,6 +79,22 @@ export const useChatsStore = defineStore('chats', () => {
     }
   }
 
+  function increaseUnreadCounterToMember(chatId: string, member: string, countUnread: number){
+    const chat = getChatById(chatId);
+    if (chat) {
+      if (member == 'from') chat.unread1 += countUnread
+      if (member == 'to') chat.unread2 += countUnread
+    }
+  }
+
+  function setUnreadCounterToMember(chatId: string, member: string, countUnread: number){
+    const chat = getChatById(chatId);
+    if (chat) {
+      if (member == 'from') chat.unread1 = countUnread
+      if (member == 'to') chat.unread2 = countUnread
+    }
+  }
+
   function updateChatNewMessage(
     chatId: string,
     countUnread: number,
@@ -105,6 +121,17 @@ export const useChatsStore = defineStore('chats', () => {
     }
   }
 
+  function readCurrentMessage(chatId: string, message){
+    const chat = getChatById(chatId);
+    const target = messages.findIndex((m) => m.chatId == message.chatId && m.timestamp == message.timestamp)
+    console.log(chat, target, message)
+    if (target) {
+      console.log(messages)
+      messages[target].status = 'read'
+      chat['lastMessage.status'] = 'read'
+    }
+  }
+
   return {
     chats,
     increaseUnreadCounter,
@@ -120,5 +147,8 @@ export const useChatsStore = defineStore('chats', () => {
     setUnreadCounter,
     setLastStatus,
     readMessages,
+    increaseUnreadCounterToMember,
+    setUnreadCounterToMember,
+    readCurrentMessage,
   }
 })

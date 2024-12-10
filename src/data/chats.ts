@@ -2,7 +2,7 @@ export const chats = [
   {
     chatId: 1, name: "Юрий", members: [1, 4],
     avatar: 'https://img.freepik.com/free-photo/smiley-man-relaxing-outdoors_23-2148739334.jpg',
-    countUnread: 0,
+    countUnread: 0,unread1: 0, unread2: 0,
     lastMessage: 'test',
     'lastActivity.time': '24.09.2024',         // читаемый формат - для пользователей
     'lastActivity.timestamp': '1727001759',   // для сортировки
@@ -22,7 +22,7 @@ export const chats = [
   },
   {
     chatId: 2, name: "Василий", members: [2, 4],
-    countUnread: 0,
+    countUnread: 0,unread1: 0, unread2: 0,
     isFixedBottom: false,
     isFixedTop: false,
     'lastActivity.time': '24.09.2024',
@@ -40,7 +40,7 @@ export const chats = [
   },
   {
     chatId: 3, name: "Алексей", members: [3, 4],
-    countUnread: 1, 
+    countUnread: 1, unread1: 0, unread2: 0,
     isFixedBottom: false,
     isFixedTop: false,
     'lastActivity.time': '23.09.2024',

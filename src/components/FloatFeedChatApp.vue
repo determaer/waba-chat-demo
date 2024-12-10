@@ -25,9 +25,10 @@
               <Feed
                 :objects="messages"
                 :is-scroll-to-bottom-on-update-objects-enabled="isScrollToBottomOnUpdateObjectsEnabled"
+                :typing="selectedChat.typingIn"
                 @message-action="messageAction"
                 @load-more="loadMore"
-                :typing="selectedChat.typingIn"
+                @message-visible="messageVisible"
               />
               <ChatInput
                 @send="addMessage"
@@ -144,6 +145,16 @@ const onlineUser = () => {
 const messageAction = (data) => {
   console.log("message action", data);
 };
+
+const messageVisible = (message) => {
+  if (message.chatId && message.chatId == selectedChat.value.chatId){
+    if (message.senderId != props.index + 1 && message.status == 'received' && message.position == 'left'){
+      console.log('сообщение: ', message, props.index)
+      chatsStore.readCurrentMessage(selectedChat.value.chatId, message)
+      newMessage.value = !newMessage.value
+    }
+  }
+}
 
 let timer;
 const sendTyping = () => {

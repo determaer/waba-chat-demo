@@ -39,10 +39,11 @@
               />
               <Feed
                 :objects="messages"
-                @message-action="messageAction"
-                @load-more="loadMore"
                 :is-scroll-to-bottom-on-update-objects-enabled="isScrollToBottomOnUpdateObjectsEnabled"
                 :typing="selectedChat.typing"
+                @message-action="messageAction"
+                @load-more="loadMore"
+                @message-visible="messageVisible"
                 />
               <ChatInput
                 @send="addMessage"
@@ -119,10 +120,10 @@ watch(
   () => newMessage.value,
   () => {
     messages.value = getFeedObjects();
-    if (selectedChat.value){
+    /*if (selectedChat.value){
       chatsStore.setUnreadCounter(selectedChat.value.chatId, 0);
       chatsStore.readMessages(selectedChat.value.chatId, props.index + 1)
-    }
+    }*/
   },
 )
 
@@ -193,6 +194,17 @@ const messageAction = (data) => {
   console.log("message action", data);
 };
 
+const messageVisible = (message) => {
+  if (message.chatId && message.chatId == selectedChat.value.chatId){
+    if (message.senderId != props.index + 1 && message.status == 'received' && message.position == 'left'){
+      console.log('сообщение: ', message, props.index + 1, message.senderId != props.index + 1)
+      chatsStore.readCurrentMessage(selectedChat.value.chatId, message)
+      chatsStore.decreaseUnreadCounter(selectedChat.value.chatId, 1)
+      newMessage.value = !newMessage.value
+    }
+  }
+}
+
 const loadMore = () => {
   // do load more messages to feed
   console.log("load more");
@@ -253,19 +265,18 @@ const sendTyping = () => {
 }
 
 const selectChat = (chat) => {
-  newMessage.value = !newMessage.value
   selectedChat.value = chat;
-  chatsStore.setUnreadCounter(chat.chatId, 0);
-  chatsStore.readMessages(chat.chatId, props.index + 1)
+  if (selectedChat.value.countUnread > 0){
+    chatsStore.setUnreadCounter(chat.chatId, 0);
+    chatsStore.readMessages(chat.chatId, props.index + 1)
+  }
   messages.value = getFeedObjects(); // Обновляем сообщения при выборе контакта
 };
 
 onMounted(() => {
-  // console.log('mounted')
   userProfile.value = props.authProvider.getUserProfile(props.index);
   chatsStore.chats = props.dataProvider.getChats();
   channels.value = props.dataProvider.getChannels();
   templates.value = props.dataProvider.getTemplates()
-  console.log(userProfile)
 });
 </script>
