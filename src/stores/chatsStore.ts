@@ -123,9 +123,7 @@ export const useChatsStore = defineStore('chats', () => {
   function readCurrentMessage(chatId: string, message){
     const chat = getChatById(chatId);
     const target = messages.findIndex((m) => m.chatId == message.chatId && m.timestamp == message.timestamp)
-    console.log(chat, target, message)
     if (target) {
-      console.log(messages)
       messages[target].status = 'read'
       chat['lastMessage.status'] = 'read'
     }

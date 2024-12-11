@@ -35,8 +35,19 @@
             <template #default>
               <ChatInfo
                 :chat="selectedChat"
-                @open-panel="isOpenChatPanel = !isOpenChatPanel"
-              />
+               >
+               <template #actions>
+                  <div style="display: flex;">
+                    <button
+                      class="chat-info__button-panel"
+                      @click="isOpenChatPanel = !isOpenChatPanel"
+                    >
+                      <span class="pi pi-info-circle" />
+                    </button>
+                  </div>
+                </template>
+              </ChatInfo> 
+              
               <Feed
                 :button-params="selectedChat.countUnread > 0 ? {unreadAmount: selectedChat.countUnread} : null"
                 :objects="messages"
@@ -76,7 +87,7 @@
                 @close-panel="isOpenChatPanel = !isOpenChatPanel"
               >
                 <template #content>
-                  test
+                  Информация
                 </template>
               </ChatPanel>
             </template>
@@ -121,10 +132,6 @@ watch(
   () => newMessage.value,
   () => {
     messages.value = getFeedObjects();
-    /*if (selectedChat.value){
-      chatsStore.setUnreadCounter(selectedChat.value.chatId, 0);
-      chatsStore.readMessages(selectedChat.value.chatId, props.index + 1)
-    }*/
   },
 )
 
@@ -198,7 +205,6 @@ const messageAction = (data) => {
 const messageVisible = (message) => {
   if (message.chatId && message.chatId == selectedChat.value.chatId){
     if (message.senderId != props.index + 1 && message.status == 'received' && message.position == 'left'){
-      console.log('сообщение: ', message, props.index + 1, message.senderId != props.index + 1)
       chatsStore.readCurrentMessage(selectedChat.value.chatId, message)
       chatsStore.decreaseUnreadCounter(selectedChat.value.chatId, 1)
       newMessage.value = !newMessage.value
@@ -212,7 +218,7 @@ const loadMore = () => {
 };
 
 const getFeedObjects = () => {
-  // console.log('get feed')
+
   if (selectedChat.value) {
     // здесь обработка для передачи сообщений в feed
     isScrollToBottomOnUpdateObjectsEnabled.value = true;
@@ -231,15 +237,13 @@ const getFeedObjects = () => {
 const addMessage = (message) => {
   console.log(message);
   // Добавление сообщения в хранилище
-  const receiverId = selectedChat.value.members.find(id => id != props.index + 1) - 1
-  const isReceiverOnline = props.authProvider.getUserProfile(receiverId).online;
   props.dataProvider.addMessage({
     text: message.text,
     type: message.type,
     chatId: selectedChat.value.chatId,
     senderId: props.index + 1,
     timestamp: Date.now() / 1000,
-    status: isReceiverOnline ? 'read' : 'received',
+    status: 'received',
     url: message.url,
     filename: message.filename,
   });
@@ -252,7 +256,7 @@ const addMessage = (message) => {
     chatMessageText, 
     formatTimestamp(Date.now()/ 1000),
     Date.now()/ 1000,
-    isReceiverOnline ? 'read' : 'received'
+    'received',
   )
   chatsStore.increaseUnreadCounterOut(selectedChat.value.chatId, 1)
 };

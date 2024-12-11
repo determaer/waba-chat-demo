@@ -150,7 +150,6 @@ const messageAction = (data) => {
 const messageVisible = (message) => {
   if (message.chatId && message.chatId == selectedChat.value.chatId){
     if (message.senderId != props.index + 1 && message.status == 'received' && message.position == 'left'){
-      console.log('сообщение: ', message, props.index)
       chatsStore.readCurrentMessage(selectedChat.value.chatId, message)
       chatsStore.decreaseUnreadCounterOut(selectedChat.value.chatId, 1)
       newMessage.value = !newMessage.value
@@ -173,7 +172,6 @@ const loadMore = () => {
 };
 
 const getFeedObjects = (scrollFlag) => {
-  // console.log('get feed')
   if (selectedChat.value) {
     // здесь обработка для передачи сообщений в feed
     isScrollToBottomOnUpdateObjectsEnabled.value = scrollFlag
@@ -214,13 +212,11 @@ const addMessage = (message) => {
 };
 
 onMounted(() => {
-  // console.log('mounted')
   userProfile.value = props.authProvider.getUserProfile(props.index);
   chatsStore.chats = props.dataProvider.getChats();
   channels.value = props.dataProvider.getChannels();
   selectedChat.value = chatsStore.chats[props.index]
   messages.value = getFeedObjects(false)
-  console.log(userProfile.value, chatsStore.chats[props.index])
   themes[props.index].default = true
 });
 </script>
