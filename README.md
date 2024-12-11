@@ -1,5 +1,17 @@
-# Vue 3 + Vite
+# Demo chat app 
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+This app contains 4 chat windows (3 of them are configured on feed layout, 1 of them - base layout, including chat list and feed). Supports most commonly used chat features: read, write, upload files, Based on [mobilon-dev/chotto](https://github.com/mobilon-dev/chotto) library.
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+![](images/all.jpg)
+
+# Github pages
+
+[chat app demo](https://determaer.github.io/chat-demo/)
+
+# Local deployment
+
+After cloning repo to local machine type this in CLI:
+
+` npm install `
+
+` npm run dev `
