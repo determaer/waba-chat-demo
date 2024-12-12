@@ -3,7 +3,7 @@
       Открыть чат
     </button>
     <FloatContainer
-      v-else
+      v-else-if="messages.length > 1"
       :title="userProfile ? userProfile.name : ''"
       color-title="#d4d4d4"
       :avatar="userProfile ? userProfile.avatar : ''"
@@ -49,6 +49,9 @@
         </template>
       </FeedLayout>
     </FloatContainer>
+    <div v-else>
+      Здесь находится окно чата пользователя, с которым диалог не начат. Напишите Юрию, чтобы открыть диалоговое окно.
+    </div>
 </template>
 
 <script setup>
@@ -175,7 +178,7 @@ const getFeedObjects = (scrollFlag) => {
   if (selectedChat.value) {
     // здесь обработка для передачи сообщений в feed
     isScrollToBottomOnUpdateObjectsEnabled.value = scrollFlag
-    const messages = props.dataProvider.getFeed(selectedChat.value.chatId);
+    const messages = props.dataProvider.getOutterUserFeed(selectedChat.value.chatId);
     const messages3 = transformToFeed(messages, props.index);
     return messages3;
   } else {

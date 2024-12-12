@@ -39,6 +39,9 @@ const dataProvider = {
   getFeed(chatId) {
     return data3.messages.filter(m => m.chatId === chatId);
   },
+  getOutterUserFeed(chatId) {
+    return data3.messages.filter(m => m.chatId === chatId && m.type != "message.system");
+  },
   getChannels() {
     return data3.channels;
   },

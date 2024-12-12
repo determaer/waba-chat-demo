@@ -64,17 +64,24 @@
                 <template #buttons>
                   <FileUploader
                     :filebump-url="filebumpUrl"
+                    :state="'active'"
                   />
                   <ButtonEmojiPicker 
                     :mode="'hover'"
+                    :state="'active'"
                   />
-                  <ButtonTemplateSelector
-                    :templates="templates.templates"
+                  <ButtonWabaTemplateSelector
+                    :waba-templates="templates.wabaTemplates"
+                    :group-templates="templates.groups"
                     :mode="'click'"
+                    :state="'active'"
+                    @send-waba-values="sendWabaValues"
+                    :filebump-url="filebumpUrl"
                   />
                   <ChannelSelector 
                     :channels="channels"
                     :mode="'hover'"
+                    :state="'active'"
                   />
                 </template>
               </ChatInput>
@@ -120,6 +127,7 @@ import {
   ButtonTemplateSelector,
   ChannelSelector,
   ThemeMode,
+  ButtonWabaTemplateSelector
 } from "@mobilon-dev/chotto";
 
 import { useChatsStore } from "../stores/chatsStore";
@@ -182,6 +190,10 @@ const templates = ref([]);
 const isOpenChatPanel = ref(false);
 const isScrollToBottomOnUpdateObjectsEnabled = ref(false);
 const filebumpUrl = ref('https://filebump2.services.mobilon.ru');
+
+const sendWabaValues = (obj) => {
+  console.log('send waba values', obj);
+}
 
 const offlineUser = () => {
   userProfile.value.online = false
