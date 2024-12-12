@@ -217,6 +217,6 @@ onMounted(() => {
   channels.value = props.dataProvider.getChannels();
   selectedChat.value = chatsStore.chats[props.index]
   messages.value = getFeedObjects(false)
-  themes[props.index].default = true
+  themes[2].default = true
 });
 </script>

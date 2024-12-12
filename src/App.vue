@@ -65,25 +65,21 @@ const dataProvider = {
       />
     </div>
     <div class="cell12">
-      <FloatFeedChatApp
+      <FloatBaseChatApp
         :auth-provider="authProvider"
         :data-provider="dataProvider"
-        :index="1"
+        :index="2"
       />
     </div>
     <div class="cell21">
       <FloatFeedChatApp
         :auth-provider="authProvider"
         :data-provider="dataProvider"
-        :index="2"
+        :index="1"
       />
     </div>
     <div class="cell22">
-      <FloatBaseChatApp
-        :auth-provider="authProvider"
-        :data-provider="dataProvider"
-        :index="3"
-      />
+      
     </div>
   </div>
 </template>

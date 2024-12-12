@@ -11,16 +11,6 @@ export const userProfiles = [
   },
   {
     id: 2,
-    name: "Василий",
-    email: "user@m.com",
-    phone: "+79XXXXXXXX",
-    auth: 'secretkey2',
-    avatar: 'https://placehold.jp/30/336633/ffffff/64x64.png?text=MV',
-    status: "lightgreen",
-    online: true,
-  },
-  {
-    id: 3,
     name: "Алексей",
     email: "user@m.com",
     phone: "+79XXXXXXXX",
@@ -30,7 +20,7 @@ export const userProfiles = [
     online: true,
   },
   {
-    id: 4,
+    id: 3,
     name: "Татьяна",
     email: "user@m.com",
     phone: "+79XXXXXXXX",
