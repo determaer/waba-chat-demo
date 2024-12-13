@@ -91,10 +91,10 @@ const dataProvider = {
 .container {
   width: 1300px;
   height: 600px;
-  margin: 30px auto;
+  margin: 20px auto;
   display: grid;
   grid-template-columns: 500px 1000px;
-  grid-template-rows: 500px 500px;
+  grid-template-rows: 450px 450px;
 }
 
 .cell11,.cell12,.cell21,.cell22{
@@ -105,7 +105,7 @@ const dataProvider = {
 }
 
 .cell21{
-  margin-top: 50px;
+  margin-top: 0px;
 }
 .cell22 {
   margin-top: 50px;

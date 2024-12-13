@@ -7,7 +7,7 @@
       :title="userProfile ? userProfile.name : ''"
       color-title="#d4d4d4"
       :avatar="userProfile ? userProfile.avatar : ''"
-      height="500px"
+      height="450px"
       width="500px"
       @close-window="offlineUser"
     >
