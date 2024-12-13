@@ -58,23 +58,24 @@
                 @message-visible="messageVisible"
                 />
               <ChatInput
+                :state="stateButtons"
                 @send="addMessage"
                 @typing="sendTyping"
               >
                 <template #buttons>
                   <FileUploader
                     :filebump-url="filebumpUrl"
-                    :state="'active'"
+                    :state="stateButtons"
                   />
                   <ButtonEmojiPicker 
                     :mode="'hover'"
-                    :state="'active'"
+                    :state="stateButtons"
                   />
                   <ButtonWabaTemplateSelector
                     :waba-templates="templates.wabaTemplates"
                     :group-templates="templates.groups"
                     :mode="'click'"
-                    :state="'active'"
+                    :state="stateTemplate"
                     @send-waba-values="sendWabaValues"
                     :filebump-url="filebumpUrl"
                   />
@@ -82,6 +83,7 @@
                     :channels="channels"
                     :mode="'hover'"
                     :state="'active'"
+                    @select-channel="selectChannel"
                   />
                 </template>
               </ChatInput>
@@ -106,7 +108,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref, watch, nextTick } from "vue";
+import { onMounted, ref, watch, nextTick, computed } from "vue";
 
 import {
   ChatInfo,
@@ -183,6 +185,7 @@ const chatsStore = useChatsStore();
 
 // Reactive data
 const selectedChat = ref(null);
+const selectedChannel = ref(null)
 const messages = ref([]);
 const userProfile = ref({});
 const channels = ref([]);
@@ -191,8 +194,50 @@ const isOpenChatPanel = ref(false);
 const isScrollToBottomOnUpdateObjectsEnabled = ref(false);
 const filebumpUrl = ref('https://filebump2.services.mobilon.ru');
 
+const stateTemplate = computed(() => {
+  console.log(selectedChannel.value)
+  if (selectedChannel.value){
+    if (selectedChannel.value.channelId == 'channelWABA')
+      return 'active'
+  }
+  return 'disabled'
+})
+
+const stateButtons = computed(() => {
+  if (selectedChannel.value){
+    if (messages.value.length > 2 || selectedChannel.value.channelId == 'channelSMS' ) {
+      return 'active'
+    } 
+  }
+  return 'disabled'
+})
+
 const sendWabaValues = (obj) => {
   console.log('send waba values', obj);
+  const messageObject = {
+      type: '',
+      text: '',
+      url: '',
+      filename: '',
+      size: '',
+    };
+
+    if (obj.file) {
+      messageObject.type = 'message.' + obj.file.filetype;
+      messageObject.url = obj.file.url;
+      messageObject.filename = obj.file.filename;
+      messageObject.size = obj.file.filesize.toString();
+      messageObject.text = obj.text.trim();
+    } else {
+      messageObject.type = 'message.text';
+      messageObject.text = obj.text.trim();
+    }
+
+  addMessage(messageObject)
+}
+
+const selectChannel = (channel) => {
+  selectedChannel.value = channel
 }
 
 const offlineUser = () => {
